@@ -5,8 +5,6 @@
   <meta charset="utf-8">
 
   <title>.template</title>
-  <script src="build/template.js"></script>
-  <script src="interpreter.js"></script>
 
   <style>
     * {
@@ -28,11 +26,12 @@
 </head>
 
 <body>
+  <script src="main.js"></script>
   <textarea id="source" oninput="convert()" placeholder="source"></textarea>
   <textarea id="tree" placeholder="tree"></textarea>
   <textarea id="render" placeholder="render"></textarea>
 
-<script>
+<noscript>
   function convert() {
     let source = document.querySelector("#source").value
     try {
@@ -45,6 +44,6 @@
 
     document.querySelector("#render").value = Template.render(tree, {})
   }
-</script>
+</noscript>
 </body>
 </html>
