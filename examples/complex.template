@@ -1,0 +1,11 @@
+hello {{ user.name | capitalize }}
+
+{% for todo in user.todos %}
+  {{ todo.done | true_false "DONE" "TODO" }}
+  {{ todo.name }}
+
+  {% now = "now" | to_date %}
+  {% if todo.due_date | and todo.due_date | to_date | more_than now %}
+    due by {{ todo.due_date | to_date ":short" }}
+  {% endif %}
+{% endfor %}

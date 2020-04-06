@@ -1,0 +1,27 @@
+here is a link to the repo: [https://github.com/simple-updates/template](https://github.com/simple-updates/template)
+
+some sample:
+
+    <ul>
+      {% for project in projects %}
+        {% unless project.fork %}
+          <li>
+            <a href="{{ project.url }}">
+              {{ project.name }}
+            </a>
+          </li>
+        {% endunless %}
+      {% endfor %}
+    </ul>
+
+the idea is that any end-user can write it and there is no security issue (auto-escaping, etc.).
+
+you can try more complex things like `{{ user.name | upcase | first 3 }}`, it's almost backward compatible with json, e.g. `{{ { "name": "me" } | jq '.name' }}`, but can be shortened as `{{ "name": "me" | jq '.name' }}` (you can try it on this post's text for instance or the readme or anything, when it fails the errors aren't perfect)
+
+it's just a parser right now (but it gives a nice ast), it uses pegjs, you can try it in your browser without downloading anything:
+
+copy the content of https://raw.githubusercontent.com/simple-updates/template/master/template.pegjs
+
+then paste that into https://pegjs.org/online, you will see the output of the parser.
+
+thanks, any feedback is greatly appreciated.

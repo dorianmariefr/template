@@ -1,0 +1,3 @@
+{% if user.admin %}
+  {{ "delete everything" | link_to "/secret/button" }}
+{% endif %}
