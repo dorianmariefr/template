@@ -1,0 +1,50 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>.template</title>
+  <script src="build/template.js"></script>
+  <script src="interpreter.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      max-width: 600px;
+      margin: auto;
+      padding: 40px;
+    }
+
+    textarea {
+      float: left;
+      width: 33%;
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <textarea id="source" oninput="convert()" placeholder="source"></textarea>
+  <textarea id="tree" placeholder="tree"></textarea>
+  <textarea id="render" placeholder="render"></textarea>
+
+<script>
+  function convert() {
+    let source = document.querySelector("#source").value
+    try {
+      tree = Template.parse(source)
+    } catch(error) {
+      tree = error.message
+    }
+
+    document.querySelector("#tree").value = JSON.stringify(tree, undefined, 2)
+
+    document.querySelector("#render").value = Template.render(tree, {})
+  }
+</script>
+</body>
+</html>

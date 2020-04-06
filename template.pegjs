@@ -1,5 +1,7 @@
-template = (interpolation / tag / text)+
+template = empty? result:(interpolation / tag / text)*
+  { return result }
 
+empty = ""
 ws = (" " / "\n")*
 single_quote = "'"
 double_quote = '"'
