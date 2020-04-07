@@ -30,7 +30,15 @@ describe("Template", function() {
 
   it("works on an array interpolation", function() {
     expect(Template.render("{{ 1, true, name }}", { "name": "Dorian" })).to.equal(
-      "1, true, Dorian"
+      "[1, true, Dorian]"
+    )
+  })
+
+  it("works on an hash interpolation", function() {
+    expect(Template.render(
+      "{{ name: name, numbers: [1, 2, 3] }}", { "name": "Dorian" }
+    )).to.equal(
+      "{ name: Dorian, numbers: [1, 2, 3] }"
     )
   })
 })

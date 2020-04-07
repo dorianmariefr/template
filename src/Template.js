@@ -15,9 +15,13 @@ let valueToText = function(value, data) {
   } else if (value.boolean) {
     return value.boolean
   } else if (value.array) {
-    return _.map(value.array, (element) => {
+    return "[" + _.map(value.array, (element) => {
       return valueToText(element, data)
-    }).join(", ")
+    }).join(", ") + "]"
+  } else if (value.hash) {
+    return "{ " +_.map(value.hash, (element) => {
+      return element.key + ": " + valueToText(element.value, data)
+    }).join(", ") + " }"
   }
 }
 
