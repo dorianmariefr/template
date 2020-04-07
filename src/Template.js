@@ -1,9 +1,24 @@
-let parser = require("./template.pegjs")
+import parser from "./template.pegjs"
+import _ from "underscore"
 
 let Template = {}
 
 Template.parse = function(template) {
   return parser.parse(template)
+}
+
+let valueToText = function(value, data) {
+  if (value.variable) {
+    return data[value.variable]
+  } else if (value.integer) {
+    return value.integer
+  } else if (value.boolean) {
+    return value.boolean
+  } else if (value.array) {
+    return _.map(value.array, (element) => {
+      return valueToText(element, data)
+    }).join(", ")
+  }
 }
 
 Template.render = function(template, data) {
@@ -22,14 +37,7 @@ Template.render = function(template, data) {
       result += element.text
     } else if (element.interpolation) {
       let value = element.interpolation.value
-
-      if (value.variable) {
-        result += data[value.variable]
-      } else if (value.integer) {
-        result += value.integer
-      } else if (value.boolean) {
-        result += value.boolean
-      }
+      result += valueToText(value, data)
     }
   })
 

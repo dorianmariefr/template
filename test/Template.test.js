@@ -17,14 +17,20 @@ describe("Template", function() {
   })
 
   it("works on a number interpolation", function() {
-    expect(Template.render("hello {{ 2 }}", { "name": "Dorian" })).to.equal(
+    expect(Template.render("hello {{ 2 }}", {})).to.equal(
       "hello 2"
     )
   })
 
   it("works on a boolean interpolation", function() {
-    expect(Template.render("{{ true }} / {{ false }}", { "name": "Dorian" })).to.equal(
+    expect(Template.render("{{ true }} / {{ false }}", {})).to.equal(
       "true / false"
+    )
+  })
+
+  it("works on an array interpolation", function() {
+    expect(Template.render("{{ 1, true, name }}", { "name": "Dorian" })).to.equal(
+      "1, true, Dorian"
     )
   })
 })
