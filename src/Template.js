@@ -8,7 +8,13 @@ Template.parse = function(template) {
 }
 
 let valueToText = function(value, data) {
-  if (value.variable) {
+  if (value.nil) {
+    return "null"
+  } else if (value.float) {
+    return value.float
+  } else if (value.string) {
+    return value.string
+  } else if (value.variable) {
     return data[value.variable]
   } else if (value.integer) {
     return value.integer

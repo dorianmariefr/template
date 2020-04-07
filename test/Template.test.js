@@ -41,4 +41,12 @@ describe("Template", function() {
       "{ name: Dorian, numbers: [1, 2, 3] }"
     )
   })
+
+  it("works on an nil, float, string interpolation", function() {
+    expect(Template.render(
+      "{{ null, 1.2, 'hello' }}", {}
+    )).to.equal(
+      "[null, 1.2, hello]"
+    )
+  })
 })

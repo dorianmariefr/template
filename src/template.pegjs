@@ -142,10 +142,10 @@ value =
   value:(
     nil:nil
     { return { nil } } /
-    integer:integer
-    { return { integer } } /
     float:float
     { return { float } } /
+    integer:integer
+    { return { integer } } /
     string:string
     { return { string } } /
     array:array
@@ -162,10 +162,12 @@ name = $(alpha (alpha_num / ("_" alpha_num))*)
 variable = $(name ("." name)*)
 method = name
 integer = $(non_zero_digit (digit / "_")*)
-float = "-"? integer "." integer ("e" ("+" / "-") integer)
-single_quoted_string = single_quote (!single_quote .)* single_quote
-double_quoted_string = double_quote (!double_quote .)* double_quote
-string = $(single_quoted_string / double_quoted_string)
+float = $("-"? integer "." integer ("e" ("+" / "-")? integer)?)
+single_quoted_string = single_quote string:$(!single_quote .)* single_quote
+  { return string }
+double_quoted_string = double_quote string:$(!double_quote .)* double_quote
+  { return string }
+string = single_quoted_string / double_quoted_string
 key = name / string
 boolean = true / false
 
