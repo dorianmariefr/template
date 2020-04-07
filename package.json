@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "build": "webpack --mode development"
+    "build": "webpack --mode development",
+    "test": "TESTBUILD=true webpack --mode development && mocha test-dist/main.js --require source-map-support/register && rm -rf test-dist"
   },
   "dependencies": {
     "pegjs": "^0.10.0",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^7.1.1"
+    "mocha": "^7.1.1",
+    "source-map-support": "^0.5.16"
   }
 }

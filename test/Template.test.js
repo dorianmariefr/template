@@ -13,10 +13,10 @@ let data = {
 }
 
 let filters = {
-  upcase: function(value, arguments = {}) {
+  upcase: function(value, args = {}) {
     value.toUpperCase()
   },
-  downcase: function(value, arguments = {}) {
+  downcase: function(value, args = {}) {
     value.toLowerCase()
   }
 }
