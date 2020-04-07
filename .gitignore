@@ -1,3 +1,5 @@
-template.js
 dist/main.js
+test-dist/main.js
+
 node_modules/
+yarn-error.log
