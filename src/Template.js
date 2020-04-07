@@ -25,6 +25,10 @@ Template.render = function(template, data) {
 
       if (value.variable) {
         result += data[value.variable]
+      } else if (value.integer) {
+        result += value.integer
+      } else if (value.boolean) {
+        result += value.boolean
       }
     }
   })
