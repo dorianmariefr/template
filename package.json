@@ -4,12 +4,15 @@
   "description": "",
   "license": "ISC",
   "private": true,
-  "dependencies": {
-    "lodash": "^4.17.15",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
-  },
   "scripts": {
-    "build": "webpack"
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode development"
+  },
+  "dependencies": {
+    "pegjs": "^0.10.0",
+    "pegjs-loader": "^0.5.6",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   }
 }

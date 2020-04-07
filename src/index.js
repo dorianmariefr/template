@@ -1,12 +1,31 @@
-import _ from 'lodash';
+import Template from "./Template"
 
-function component() {
-  const element = document.createElement('div');
+document.querySelector("#source").addEventListener("input", render)
 
-  // Lodash, currently included via a script, is required for this line to work
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+function render() {
+  let $source = document.querySelector("#source")
+  let $data = document.querySelector("#data")
+  let $tree = document.querySelector("#tree")
+  let $render = document.querySelector("#render")
 
-  return element;
+  let source = $source.value
+
+  let data = {}
+
+  try {
+    let tree = Template.parse(source)
+    $tree.value = JSON.stringify(tree, undefined, 2)
+  } catch(error) {
+    $tree.value = error.message || error
+  }
+
+
+  try {
+    data = JSON.parse($data.value)
+    $render.value = Template.render(source, data)
+  } catch (error) {
+    $render.value = error
+  }
 }
 
-document.body.appendChild(component());
+render()

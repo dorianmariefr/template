@@ -12,38 +12,28 @@
     }
 
     body {
-      max-width: 600px;
+      max-width: 800px;
       margin: auto;
       padding: 40px;
     }
 
     textarea {
       float: left;
-      width: 33%;
+      width: 25%;
       height: 300px;
     }
   </style>
 </head>
 
 <body>
-  <script src="main.js"></script>
-  <textarea id="source" oninput="convert()" placeholder="source"></textarea>
+  <textarea id="source" placeholder="source">Hello {{ name }} you are {{ age }} years old.</textarea>
+  <textarea id="data" placeholder="source">{
+    "name": "Dorian",
+    "age": 27
+}</textarea>
   <textarea id="tree" placeholder="tree"></textarea>
   <textarea id="render" placeholder="render"></textarea>
 
-<noscript>
-  function convert() {
-    let source = document.querySelector("#source").value
-    try {
-      tree = Template.parse(source)
-    } catch(error) {
-      tree = error.message
-    }
-
-    document.querySelector("#tree").value = JSON.stringify(tree, undefined, 2)
-
-    document.querySelector("#render").value = Template.render(tree, {})
-  }
-</noscript>
+  <script src="main.js"></script>
 </body>
 </html>
