@@ -159,7 +159,7 @@ value =
   )
 
 name = $(alpha (alpha_num / ("_" alpha_num))*)
-variable = $(name ("." name)*)
+variable = $(name ("[" number "]")? ("." name ("[" number "]")?)*)
 method = name
 number = $((non_zero_digit (digit / "_")*)/ "0")
 integer = $("-"? number)

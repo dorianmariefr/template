@@ -27,11 +27,19 @@
 
 <body>
   <textarea id="source" placeholder="source">
-    {{ 1 | plus 1 }}
+    {{ a.d[2].e }}
   </textarea>
   <textarea id="data" placeholder="source">{
-    "name": "Dorian",
-    "age": 27
+    "a": {
+      "b": {
+        "c": "hello world"
+      },
+      "d": [
+        1,
+        2,
+        { "e": "nice world" }
+      ]
+    }
 }</textarea>
   <textarea id="tree" placeholder="tree"></textarea>
   <textarea id="render" placeholder="render"></textarea>

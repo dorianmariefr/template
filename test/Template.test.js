@@ -1,7 +1,20 @@
 import { expect } from "chai"
 import Template from "../src/Template"
 
-let data = { name: "Dorian" }
+let data = {
+  name: "Dorian",
+  books: [
+    {
+      title: "Hackers and Painters",
+      author: "Paul Graham"
+    }
+  ],
+  languages: {
+    ruby: {
+      favorite: true
+    }
+  }
+}
 
 describe("Template", function() {
   it("works on an empty string", function() {
@@ -80,6 +93,22 @@ describe("Template", function() {
       }
     )).to.equal(
       "5.5"
+    )
+  })
+
+  it("works on array variable interpolation", function() {
+    expect(Template.render(
+      "{{ name }} reads {{ books[0].title }} by {{ books[0].author }}", data 
+    )).to.equal(
+      "Dorian reads Hackers and Painters by Paul Graham"
+    )
+  })
+
+  it("works on chained variable interpolation", function() {
+    expect(Template.render(
+      "Is ruby {{ name }}'s favorite? {{ languages.ruby.favorite }}", data 
+    )).to.equal(
+      "Is ruby Dorian's favorite? true"
     )
   })
 })

@@ -7,6 +7,37 @@ Template.parse = function(template) {
   return parser.parse(template)
 }
 
+let fetchVariableInData = function(variable, data) {
+  let parts = variable.split(".")
+  let current = data
+
+  _.each(parts, (part) => {
+    let index = null
+
+    if (part.includes("[")) {
+      let partIndex = part.split("[")[1]
+      index = parseInt(partIndex.substring(0, partIndex.length - 1), 10)
+      part = part.split("[")[0]
+    }
+
+    if (typeof current !== "object") {
+      throw `variable ${variable} not found`
+    }
+
+    if (!(part in current)) {
+      throw `variable ${variable} not found`
+    }
+
+    current = current[part]
+
+    if (index !== null) {
+      current = current[index]
+    }
+  })
+
+  return current
+}
+
 let valueToJs = function(value, data) {
   if ("nil" in value) {
     return null
@@ -15,7 +46,7 @@ let valueToJs = function(value, data) {
   } else if ("string" in value) {
     return value.string
   } else if ("variable" in value) {
-    return data[value.variable]
+    return fetchVariableInData(value.variable, data)
   } else if ("integer" in value) {
     return parseInt(value.integer, 10)
   } else if ("boolean" in value) {
