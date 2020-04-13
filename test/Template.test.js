@@ -72,9 +72,9 @@ describe("Template", function() {
 
   it("works on an edge cases", function() {
     expect(Template.render(
-      "{{ 0, '0', -1 }}", data
+      "{{ 0, '0', \"\", '', -1 }}", data
     )).to.equal(
-      "[0, 0, -1]"
+      "[0, 0, , , -1]"
     )
   })
 })

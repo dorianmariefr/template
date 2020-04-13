@@ -8,23 +8,23 @@ Template.parse = function(template) {
 }
 
 let valueToJs = function(value, data) {
-  if (value.nil) {
+  if ("nil" in value) {
     return null
-  } else if (value.float) {
+  } else if ("float" in value) {
     return parseFloat(value.float, 10)
-  } else if (value.string) {
+  } else if ("string" in value) {
     return value.string
-  } else if (value.variable) {
+  } else if ("variable" in value) {
     return data[value.variable]
-  } else if (value.integer) {
+  } else if ("integer" in value) {
     return parseInt(value.integer, 10)
-  } else if (value.boolean) {
+  } else if ("boolean" in value) {
     return value.boolean
-  } else if (value.array) {
+  } else if ("array" in value) {
     return _.map(value.array, (element) => {
       return valueToJs(element, data)
     })
-  } else if (value.hash) {
+  } else if ("hash" in value) {
     let hash = {}
 
     _.each(value.hash, (element) => {
