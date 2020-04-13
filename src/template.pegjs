@@ -161,8 +161,9 @@ value =
 name = $(alpha (alpha_num / ("_" alpha_num))*)
 variable = $(name ("." name)*)
 method = name
-integer = $(non_zero_digit (digit / "_")*)
-float = $("-"? integer "." integer ("e" ("+" / "-")? integer)?)
+number = $((non_zero_digit (digit / "_")*)/ "0")
+integer = $("-"? number)
+float = $("-"? number "." number ("e" ("+" / "-")? number)?)
 single_quoted_string = single_quote string:$(!single_quote .)* single_quote
   { return string }
 double_quoted_string = double_quote string:$(!double_quote .)* double_quote

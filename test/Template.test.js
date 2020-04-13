@@ -69,4 +69,12 @@ describe("Template", function() {
       "[null, 1.2, hello]"
     )
   })
+
+  it("works on an edge cases", function() {
+    expect(Template.render(
+      "{{ 0, '0', -1 }}", data
+    )).to.equal(
+      "[0, 0, -1]"
+    )
+  })
 })
