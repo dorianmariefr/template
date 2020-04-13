@@ -27,19 +27,22 @@
 
 <body>
   <textarea id="source" placeholder="source">
-    {{ a.d[2].e }}
+    start {{ a }} {{ b }} {{ c }}
+    {% if a %}
+    hello world
+    {% elsif b %}
+    hello 2
+    {% elsif c %}
+    hello 3
+    {% else %}
+    goodbye world
+    {% endif %}
+    end
   </textarea>
   <textarea id="data" placeholder="source">{
-    "a": {
-      "b": {
-        "c": "hello world"
-      },
-      "d": [
-        1,
-        2,
-        { "e": "nice world" }
-      ]
-    }
+    "a": true,
+    "b": false,
+    "c": false
 }</textarea>
   <textarea id="tree" placeholder="tree"></textarea>
   <textarea id="render" placeholder="render"></textarea>

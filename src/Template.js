@@ -90,8 +90,59 @@ let valueToText = function(value) {
   }
 }
 
+let evaluateExpression = (value, filters, data, args) => {
+  value = valueToJs(value, data)
+
+  _.each(filters, (filter) => {
+    if (!(filter.method in args.filters)) {
+      throw "unknown filter " + filter.method
+    }
+
+    value = args.filters[filter.method](
+      value,
+      ..._.map(filter.parameters, (parameter) => valueToJs(parameter.value, data))
+    )
+  })
+
+  return value
+}
+
+let isTruthy = (value) => {
+  return value !== undefined && value !== null && value !== false
+}
+
+let renderTree = (tree, data, args) => {
+  let result = ""
+
+  _.each(tree, (element) => {
+    if ("text" in element) {
+      result += element.text
+    } else if ("interpolation" in element) {
+      let value = element.interpolation.value
+      let filters = element.interpolation.filters
+      value = evaluateExpression(value, filters, data, args)
+      result += valueToText(value)
+    } else if ("tag" in element) {
+      if ("if" in element.tag) { 
+        let value = element.tag.if.if.value
+        let filters = element.tag.if.if.filters
+        value = evaluateExpression(value, filters, data, args)
+        if (isTruthy(value)) {
+          result += renderTree(element.tag.if.if.template, data, args)
+        }
+      } else {
+        throw "unrecognized element"
+      }
+    } else {
+      throw "unrecognized element"
+    }
+  })
+
+  return result
+}
+
 Template.render = function(template, data = {}, args = {}) {
-  let filters = args.filters || {}
+  args.filters = args.filters || {}
   let tree = {}
 
   try {
@@ -100,29 +151,7 @@ Template.render = function(template, data = {}, args = {}) {
     return error.message || error
   }
 
-  let result = ""
-
-  tree.forEach((element) => {
-    if (element.text) {
-      result += element.text
-    } else if (element.interpolation) {
-      let value = element.interpolation.value
-      value = valueToJs(value, data)
-      _.each(element.interpolation.filters, (filter) => {
-        if (!(filter.method in filters)) {
-          throw "unknown filter " + filter.method
-        }
-
-        value = filters[filter.method](
-          value,
-          ..._.map(filter.parameters, (parameter) => valueToJs(parameter.value))
-        )
-      })
-      result += valueToText(value, data)
-    }
-  })
-
-  return result
+  return renderTree(tree, data, args)
 }
 
 export default Template
