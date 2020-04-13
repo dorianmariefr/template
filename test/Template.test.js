@@ -1,33 +1,15 @@
 import { expect } from "chai"
 import Template from "../src/Template"
 
-let data = {
-  name: "Dorian",
-  sleeping: false,
-  books: [
-    {
-      title: "Hackers and Painters",
-      author: "Paul Graham"
-    }
-  ]
-}
-
-let filters = {
-  upcase: function(value, args = {}) {
-    value.toUpperCase()
-  },
-  downcase: function(value, args = {}) {
-    value.toLowerCase()
-  }
-}
+let data = { name: "Dorian" }
 
 describe("Template", function() {
   it("works on an empty string", function() {
-    expect(Template.render("", data)).to.equal("")
+    expect(Template.render("")).to.equal("")
   })
 
   it("works on a simple string", function() {
-    expect(Template.render("hello", data)).to.equal("hello")
+    expect(Template.render("hello")).to.equal("hello")
   })
 
   it("works on a simple variable interpolation", function() {
@@ -37,13 +19,13 @@ describe("Template", function() {
   })
 
   it("works on a number interpolation", function() {
-    expect(Template.render("hello {{ 2 }}", data)).to.equal(
+    expect(Template.render("hello {{ 2 }}")).to.equal(
       "hello 2"
     )
   })
 
   it("works on a boolean interpolation", function() {
-    expect(Template.render("{{ true }} / {{ false }}", data)).to.equal(
+    expect(Template.render("{{ true }} / {{ false }}")).to.equal(
       "true / false"
     )
   })
@@ -64,7 +46,7 @@ describe("Template", function() {
 
   it("works on an nil, float, string interpolation", function() {
     expect(Template.render(
-      "{{ null, 1.2, 'hello' }}", data
+      "{{ null, 1.2, 'hello' }}"
     )).to.equal(
       "[null, 1.2, hello]"
     )
@@ -72,7 +54,7 @@ describe("Template", function() {
 
   it("works on an edge cases", function() {
     expect(Template.render(
-      "{{ 0, '0', \"\", '', -1 }}", data
+      "{{ 0, '0', \"\", '', -1 }}"
     )).to.equal(
       "[0, 0, , , -1]"
     )
@@ -80,7 +62,7 @@ describe("Template", function() {
 
   it("works with a filter", function() {
     expect(Template.render(
-      "{{ 10 | plus 15.5 }}", data, {
+      "{{ 10 | plus 15.5 }}", {}, {
         filters: { plus: (value, parameter) => value + parameter }
       }
     )).to.equal(
@@ -90,7 +72,7 @@ describe("Template", function() {
 
   it("works with chained filters", function() {
     expect(Template.render(
-      "{{ 10 | plus 15.5 | plus 10 | minus 30 }}", data, {
+      "{{ 10 | plus 15.5 | plus 10 | minus 30 }}", {}, {
         filters: {
           plus: (value, parameter) => { return value + parameter },
           minus: (value, parameter) => { return value - parameter },
