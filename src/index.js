@@ -1,6 +1,13 @@
 import Template from "./Template"
 
 document.querySelector("#source").addEventListener("input", render)
+document.querySelector("#data").addEventListener("input", render)
+
+let filters = {
+  plus: function(value, parameter) {
+    return value + parameter
+  }
+}
 
 function render() {
   let $source = document.querySelector("#source")
@@ -22,7 +29,7 @@ function render() {
 
   try {
     data = JSON.parse($data.value)
-    $render.value = Template.render(source, data)
+    $render.value = Template.render(source, data, { filters: filters })
   } catch (error) {
     $render.value = error
   }

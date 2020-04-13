@@ -59,7 +59,8 @@ let valueToText = function(value) {
   }
 }
 
-Template.render = function(template, data) {
+Template.render = function(template, data, args) {
+  let filters = args.filters || {}
   let tree = {}
 
   try {
@@ -75,7 +76,18 @@ Template.render = function(template, data) {
       result += element.text
     } else if (element.interpolation) {
       let value = element.interpolation.value
-      result += valueToText(valueToJs(value, data))
+      value = valueToJs(value, data)
+      _.each(element.interpolation.filters, (filter) => {
+        if (!(filter.method in filters)) {
+          throw "unknown filter " + filter.method
+        }
+
+        value = filters[filter.method](
+          value,
+          ..._.map(filter.parameters, (parameter) => valueToJs(parameter.value))
+        )
+      })
+      result += valueToText(value, data)
     }
   })
 
