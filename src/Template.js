@@ -7,27 +7,55 @@ Template.parse = function(template) {
   return parser.parse(template)
 }
 
-let valueToText = function(value, data) {
+let valueToJs = function(value, data) {
   if (value.nil) {
-    return "null"
+    return null
   } else if (value.float) {
-    return value.float
+    return parseFloat(value.float, 10)
   } else if (value.string) {
     return value.string
   } else if (value.variable) {
     return data[value.variable]
   } else if (value.integer) {
-    return value.integer
+    return parseInt(value.integer, 10)
   } else if (value.boolean) {
     return value.boolean
   } else if (value.array) {
-    return "[" + _.map(value.array, (element) => {
-      return valueToText(element, data)
-    }).join(", ") + "]"
+    return _.map(value.array, (element) => {
+      return valueToJs(element, data)
+    })
   } else if (value.hash) {
-    return "{ " +_.map(value.hash, (element) => {
-      return element.key + ": " + valueToText(element.value, data)
+    let hash = {}
+
+    _.each(value.hash, (element) => {
+      hash[element.key] = valueToJs(element.value, data)
+    })
+
+    return hash
+  } else {
+    throw "unrecognized value to convert to js"
+  }
+}
+
+let valueToText = function(value) {
+  if (value === null || value === undefined) {
+    return "null"
+  } else if (typeof value === "number") {
+    return value.toString()
+  } else if (typeof value === "string") {
+    return value
+  } else if (typeof value === "boolean") {
+    return value.toString()
+  } else if (Array.isArray(value)) {
+    return "[" + _.map(value, (element) => {
+      return valueToText(element)
+    }).join(", ") + "]"
+  } else if (typeof value === "object") {
+    return "{ " +_.map(value, (element, key) => {
+      return key + ": " + valueToText(element)
     }).join(", ") + " }"
+  } else {
+    throw "unrecognized value to convert to text"
   }
 }
 
@@ -47,7 +75,7 @@ Template.render = function(template, data) {
       result += element.text
     } else if (element.interpolation) {
       let value = element.interpolation.value
-      result += valueToText(value, data)
+      result += valueToText(valueToJs(value, data))
     }
   })
 
