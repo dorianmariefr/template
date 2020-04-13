@@ -77,4 +77,27 @@ describe("Template", function() {
       "[0, 0, , , -1]"
     )
   })
+
+  it("works with a filter", function() {
+    expect(Template.render(
+      "{{ 10 | plus 15.5 }}", data, {
+        filters: { plus: (value, parameter) => value + parameter }
+      }
+    )).to.equal(
+      "25.5"
+    )
+  })
+
+  it("works with chained filters", function() {
+    expect(Template.render(
+      "{{ 10 | plus 15.5 | plus 10 | minus 30 }}", data, {
+        filters: {
+          plus: (value, parameter) => { return value + parameter },
+          minus: (value, parameter) => { return value - parameter },
+        }
+      }
+    )).to.equal(
+      "5.5"
+    )
+  })
 })

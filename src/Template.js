@@ -59,7 +59,7 @@ let valueToText = function(value) {
   }
 }
 
-Template.render = function(template, data, args) {
+Template.render = function(template, data, args = {}) {
   let filters = args.filters || {}
   let tree = {}
 
