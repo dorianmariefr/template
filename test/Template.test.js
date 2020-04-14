@@ -3,6 +3,7 @@ import Template from "../src/Template"
 
 let data = {
   name: "Dorian",
+  sleeping: false,
   books: [
     {
       title: "Hackers and Painters",
@@ -14,6 +15,10 @@ let data = {
       favorite: true
     }
   }
+}
+
+let filters = {
+  not: (value) => { return !value }
 }
 
 describe("Template", function() {
@@ -109,6 +114,32 @@ describe("Template", function() {
       "Is ruby {{ name }}'s favorite? {{ languages.ruby.favorite }}", data 
     )).to.equal(
       "Is ruby Dorian's favorite? true"
+    )
+  })
+
+  it("works with if conditional", function() {
+    expect(Template.render(
+      "{% if sleeping | not %}not sleeping{% endif %}", data, { filters: filters }
+    )).to.equal(
+      "not sleeping"
+    )
+  })
+
+  it("works with else conditional", function() {
+    expect(Template.render(
+      "{% if sleeping %}sleeping{% else %}not sleeping{% endif %}", data
+    )).to.equal(
+      "not sleeping"
+    )
+  })
+
+  it("works with elsif conditional", function() {
+    expect(Template.render(
+      `{% if sleeping %}sleeping
+       {% elsif sleeping | not %}not sleeping{% else %}
+       something else{% endif %}`, data, { filters: filters }
+    )).to.equal(
+      "not sleeping"
     )
   })
 })

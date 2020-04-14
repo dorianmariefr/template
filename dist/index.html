@@ -27,7 +27,7 @@
 
 <body>
   <textarea id="source" placeholder="source">
-    start {{ a }} {{ b }} {{ c }}
+    start
     {% if a %}
     hello world
     {% elsif b %}
@@ -37,12 +37,12 @@
     {% else %}
     goodbye world
     {% endif %}
-    end
+    end {{ a }} {{ b }} {{ c }}
   </textarea>
   <textarea id="data" placeholder="source">{
-    "a": true,
+    "a": false,
     "b": false,
-    "c": false
+    "c": true 
 }</textarea>
   <textarea id="tree" placeholder="tree"></textarea>
   <textarea id="render" placeholder="render"></textarea>

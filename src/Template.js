@@ -124,11 +124,25 @@ let renderTree = (tree, data, args) => {
       result += valueToText(value)
     } else if ("tag" in element) {
       if ("if" in element.tag) { 
-        let value = element.tag.if.if.value
-        let filters = element.tag.if.if.filters
-        value = evaluateExpression(value, filters, data, args)
-        if (isTruthy(value)) {
-          result += renderTree(element.tag.if.if.template, data, args)
+        let ifTags = []
+        ifTags.push(element.tag.if.if)
+        ifTags = ifTags.concat(_.map(element.tag.if.elsif))
+
+        if (element.tag.if.else) {
+          ifTags.push({
+            value: { boolean: true },
+            filters: [],
+            template: element.tag.if.else.template
+          })
+        }
+
+        let tag = _.detect(ifTags, (ifTag) => {
+          let value = evaluateExpression(ifTag.value, ifTag.filters, data, args)
+          return isTruthy(value)
+        })
+
+        if (tag) {
+          result += renderTree(tag.template, data, args)
         }
       } else {
         throw "unrecognized element"
