@@ -27,15 +27,23 @@
 
 <body>
   <textarea id="source" placeholder="source">
-    {% for user in users %}
-      {{ user.name }}
-    {% endfor %}
+    Hello {{ name }}
   </textarea>
   <textarea id="data" placeholder="source">{
-    "users": [
-      { "name": "Alpha" },
-      { "name": "Beta" }
-    ]
+  "name": "Dorian",
+  "sleeping": false,
+  "books": [
+    {
+      "title": "Hackers and Painters",
+      "author": "Paul Graham"
+    }
+  ],
+  "languages": {
+    "ruby": {
+      "favorite": true
+    }
+  },
+  "users": [{ "name": "Alpha" }, { "name": "Beta" }]
 }</textarea>
   <textarea id="tree" placeholder="tree"></textarea>
   <textarea id="render" placeholder="render"></textarea>

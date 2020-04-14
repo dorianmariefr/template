@@ -151,4 +151,12 @@ describe("Template", function() {
       "Alpha Beta "
     )
   })
+
+  it("works with assign", function() {
+    expect(Template.render(
+      "{% a = 1 %}{{ a }}"
+    )).to.equal(
+      "1"
+    )
+  })
 })
