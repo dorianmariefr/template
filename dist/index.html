@@ -27,22 +27,15 @@
 
 <body>
   <textarea id="source" placeholder="source">
-    start
-    {% if a %}
-    hello world
-    {% elsif b %}
-    hello 2
-    {% elsif c %}
-    hello 3
-    {% else %}
-    goodbye world
-    {% endif %}
-    end {{ a }} {{ b }} {{ c }}
+    {% for user in users %}
+      {{ user.name }}
+    {% endfor %}
   </textarea>
   <textarea id="data" placeholder="source">{
-    "a": false,
-    "b": false,
-    "c": true 
+    "users": [
+      { "name": "Alpha" },
+      { "name": "Beta" }
+    ]
 }</textarea>
   <textarea id="tree" placeholder="tree"></textarea>
   <textarea id="render" placeholder="render"></textarea>

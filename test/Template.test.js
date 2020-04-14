@@ -14,7 +14,8 @@ let data = {
     ruby: {
       favorite: true
     }
-  }
+  },
+  users: [{ name: "Alpha" }, { name: "Beta" }] 
 }
 
 let filters = {
@@ -140,6 +141,14 @@ describe("Template", function() {
        something else{% endif %}`, data, { filters: filters }
     )).to.equal(
       "not sleeping"
+    )
+  })
+
+  it("works with for loop", function() {
+    expect(Template.render(
+      "{% for user in users %}{{ user.name }} {% endfor %}", data
+    )).to.equal(
+      "Alpha Beta "
     )
   })
 })

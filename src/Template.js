@@ -144,6 +144,19 @@ let renderTree = (tree, data, args) => {
         if (tag) {
           result += renderTree(tag.template, data, args)
         }
+      } else if ("for" in element.tag) {
+        let values = evaluateExpression(
+          element.tag.for.for.value,
+          element.tag.for.for.filters,
+          data,
+          args
+        )
+
+        _.each(values, (value) => {
+          let newData = data
+          newData[element.tag.for.for.variable] = value
+          result += renderTree(element.tag.for.for.template, newData, args)
+        })
       } else {
         throw "unrecognized element"
       }
