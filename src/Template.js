@@ -155,7 +155,7 @@ let renderTree = (tree, data, args) => {
         _.each(values, (value) => {
           let newData = data
           newData[element.tag.for.for.variable] = value
-          result += renderTree(element.tag.for.for.template, newData, args)
+          result += renderTree(element.tag.for.template, newData, args)
         })
       } else {
         throw "unrecognized element"

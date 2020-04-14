@@ -133,8 +133,7 @@ for_tag =
   value:value ws
   filters:filter* ws
   close_tag
-  template:template?
-  { return { variable, value, filters, template } }
+  { return { variable, value, filters } }
 
 endfor_tag = open_tag ws "endfor" ws close_tag
 
