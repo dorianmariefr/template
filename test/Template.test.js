@@ -160,6 +160,14 @@ describe("Template", function() {
     )
   })
 
+  it("works with string escaping", function() {
+    expect(Template.render(
+      "{{ \"hello \\\" world \\'\", '\\' \\\"' }}"
+    )).to.equal(
+      "[hello \" world ', ' \"]"
+    )
+  })
+  
   it("works with short array syntax and trailing comma", function() {
     expect(Template.render(
       "{{ 1, }}"
