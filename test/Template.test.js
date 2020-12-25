@@ -167,4 +167,84 @@ describe("Template", function() {
       "[hello \" world ', ' \"]"
     )
   })
+  
+  it("works with short array syntax and trailing comma", function() {
+    expect(Template.render(
+      "{{ 1, }}"
+    )).to.equal(
+      "[1]"
+    )
+  })
+
+  it("works with short array syntax and trailing comma and multiple items", function() {
+    expect(Template.render(
+      "{{ 1,2, }}"
+    )).to.equal(
+      "[1, 2]"
+    )
+  })
+
+  it("works with short hash syntax and trailing comma", function() {
+    expect(Template.render(
+      "{{ a:1, }}"
+    )).to.equal(
+      "{ a: 1 }"
+    )
+  })
+
+  it("works with short hash syntax and trailing comma and multiple items", function() {
+    expect(Template.render(
+      "{{ a:1,b:2, }}"
+    )).to.equal(
+      "{ a: 1, b: 2 }"
+    )
+  })
+
+  it("works with empty array", function() {
+    expect(Template.render(
+      "{{ [] }}"
+    )).to.equal(
+      "[]"
+    )
+  })
+
+  it("works with empty hash", function() {
+    expect(Template.render(
+      "{{ {} }}"
+    )).to.equal(
+      "{}"
+    )
+  })
+
+  it("works with array syntax and trailing comma", function() {
+    expect(Template.render(
+      "{{ [1,] }}"
+    )).to.equal(
+      "[1]"
+    )
+  })
+
+  it("works with array syntax and trailing comma and multiple items", function() {
+    expect(Template.render(
+      "{{ [1,2,] }}"
+    )).to.equal(
+      "[1, 2]"
+    )
+  })
+
+  it("works with hash syntax and trailing comma", function() {
+    expect(Template.render(
+      "{{ {a:1,} }}"
+    )).to.equal(
+      "{ a: 1 }"
+    )
+  })
+
+  it("works with hash syntax and trailing comma and multiple items", function() {
+    expect(Template.render(
+      "{{ {a:1,b:2,} }}"
+    )).to.equal(
+      "{ a: 1, b: 2 }"
+    )
+  })
 })

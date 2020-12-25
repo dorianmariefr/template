@@ -82,9 +82,13 @@ let valueToText = function(value) {
       return valueToText(element)
     }).join(", ") + "]"
   } else if (typeof value === "object") {
-    return "{ " +_.map(value, (element, key) => {
-      return key + ": " + valueToText(element)
-    }).join(", ") + " }"
+    if (Object.keys(value).length === 0) {
+      return "{}"
+    } else {
+      return "{ " +_.map(value, (element, key) => {
+        return key + ": " + valueToText(element)
+      }).join(", ") + " }"
+    }
   } else {
     throw "unrecognized value to convert to text"
   }
