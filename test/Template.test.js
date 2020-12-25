@@ -15,7 +15,7 @@ let data = {
       favorite: true
     }
   },
-  users: [{ name: "Alpha" }, { name: "Beta" }] 
+  users: [{ name: "Alpha" }, { name: "Beta" }]
 }
 
 let filters = {
@@ -104,7 +104,7 @@ describe("Template", function() {
 
   it("works on array variable interpolation", function() {
     expect(Template.render(
-      "{{ name }} reads {{ books[0].title }} by {{ books[0].author }}", data 
+      "{{ name }} reads {{ books[0].title }} by {{ books[0].author }}", data
     )).to.equal(
       "Dorian reads Hackers and Painters by Paul Graham"
     )
@@ -112,7 +112,7 @@ describe("Template", function() {
 
   it("works on chained variable interpolation", function() {
     expect(Template.render(
-      "Is ruby {{ name }}'s favorite? {{ languages.ruby.favorite }}", data 
+      "Is ruby {{ name }}'s favorite? {{ languages.ruby.favorite }}", data
     )).to.equal(
       "Is ruby Dorian's favorite? true"
     )
@@ -157,6 +157,14 @@ describe("Template", function() {
       "{% a = 1 %}{{ a }}"
     )).to.equal(
       "1"
+    )
+  })
+
+  it("works with string escaping", function() {
+    expect(Template.render(
+      "{{ \"hello \\\" world \\'\", '\\' \\\"' }}"
+    )).to.equal(
+      "[hello \" world ', ' \"]"
     )
   })
 })

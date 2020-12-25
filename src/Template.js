@@ -123,7 +123,7 @@ let renderTree = (tree, data, args) => {
       value = evaluateExpression(value, filters, data, args)
       result += valueToText(value)
     } else if ("tag" in element) {
-      if ("if" in element.tag) { 
+      if ("if" in element.tag) {
         let ifTags = []
         ifTags.push(element.tag.if.if)
         ifTags = ifTags.concat(_.map(element.tag.if.elsif))

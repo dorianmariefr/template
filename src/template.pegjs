@@ -17,6 +17,8 @@ alpha = [a-zA-Z]+
 alpha_num = [a-zA-Z0-9]+
 digit = [0-9]+
 non_zero_digit = [1-9]+
+escape = "\\"
+hexdigit = [0-9a-f]i
 
 interpolation =
   open_interpolation ws
@@ -163,13 +165,30 @@ method = name
 number = $((non_zero_digit (digit / "_")*)/ "0")
 integer = $("-"? number)
 float = $("-"? number "." number ("e" ("+" / "-")? number)?)
-single_quoted_string = single_quote string:$(!single_quote .)* single_quote
-  { return string }
-double_quoted_string = double_quote string:$(!double_quote .)* double_quote
-  { return string }
+single_quoted_string = single_quote chars:(escaped / !single_quote char:. { return char })* single_quote
+  { return chars.join("") }
+double_quoted_string = double_quote chars:(escaped / !double_quote char:. { return char })* double_quote
+  { return chars.join("") }
 string = single_quoted_string / double_quoted_string
 key = name / string
 boolean = true / false
+escaped =
+  escape
+  sequence:(
+    single_quote /
+    double_quote /
+    escape /
+    "/" /
+    "b" { return "\b"; } /
+    "f" { return "\f"; } /
+    "n" { return "\n"; } /
+    "r" { return "\r"; } /
+    "t" { return "\t"; } /
+    "u" digits:$(hexdigit hexdigit hexdigit hexdigit) {
+      return String.fromCharCode(parseInt(digits, 16))
+    }
+  )
+  { return sequence }
 
 key_value =
   key:key ":" ws value:value ws
