@@ -28,7 +28,9 @@ if (process.env.TESTBUILD) {
       path: __dirname + "/dist/",
       filename: "Template.js",
       library: "Template",
-      libraryTarget: 'umd',
+      libraryTarget: "umd",
+      libraryExport: "default",
+      globalObject: "this",
     },
     module: {
       rules: [

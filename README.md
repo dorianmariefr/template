@@ -1,6 +1,36 @@
 # .template
 
-# examples
+# Installation
+
+```js
+yarn add @simple-languages/template
+// or
+npm install @simple-languages/template
+// or
+<script src="https://unpkg.com/@simple-languages/template"></script>
+```
+
+# Usage
+
+```js
+import Template from "@simple-languages/template"
+// or
+const Template = require("@simple-languages/template")
+```
+
+## Rendering
+
+```js
+Template.render("{{ [1, 2, 3] }}") // => [1, 2, 3]
+```
+
+## Parsing
+
+```js
+Template.parse("hello {{ "dorian" | capitalize }}")
+```
+
+# Examples
 
 ```liquid
 <p>{{ "hello " | plus "world" }}</p>
