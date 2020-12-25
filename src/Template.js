@@ -1,5 +1,5 @@
 import parser from "./template.pegjs"
-import _ from "underscore"
+import { each, map, detect }  from "underscore"
 
 let Template = {}
 
@@ -11,7 +11,7 @@ let fetchVariableInData = function(variable, data) {
   let parts = variable.split(".")
   let current = data
 
-  _.each(parts, (part) => {
+  each(parts, (part) => {
     let index = null
 
     if (part.includes("[")) {
@@ -52,13 +52,13 @@ let valueToJs = function(value, data) {
   } else if ("boolean" in value) {
     return value.boolean
   } else if ("array" in value) {
-    return _.map(value.array, (element) => {
+    return map(value.array, (element) => {
       return valueToJs(element, data)
     })
   } else if ("hash" in value) {
     let hash = {}
 
-    _.each(value.hash, (element) => {
+    each(value.hash, (element) => {
       hash[element.key] = valueToJs(element.value, data)
     })
 
@@ -78,14 +78,14 @@ let valueToText = function(value) {
   } else if (typeof value === "boolean") {
     return value.toString()
   } else if (Array.isArray(value)) {
-    return "[" + _.map(value, (element) => {
+    return "[" + map(value, (element) => {
       return valueToText(element)
     }).join(", ") + "]"
   } else if (typeof value === "object") {
     if (Object.keys(value).length === 0) {
       return "{}"
     } else {
-      return "{ " +_.map(value, (element, key) => {
+      return "{ " + map(value, (element, key) => {
         return key + ": " + valueToText(element)
       }).join(", ") + " }"
     }
@@ -97,14 +97,14 @@ let valueToText = function(value) {
 let evaluateExpression = (value, filters, data, args) => {
   value = valueToJs(value, data)
 
-  _.each(filters, (filter) => {
+  each(filters, (filter) => {
     if (!(filter.method in args.filters)) {
       throw "unknown filter " + filter.method
     }
 
     value = args.filters[filter.method](
       value,
-      ..._.map(filter.parameters, (parameter) => valueToJs(parameter.value, data))
+      ...map(filter.parameters, (parameter) => valueToJs(parameter.value, data))
     )
   })
 
@@ -118,7 +118,7 @@ let isTruthy = (value) => {
 let renderTree = (tree, data, args) => {
   let result = ""
 
-  _.each(tree, (element) => {
+  each(tree, (element) => {
     if ("text" in element) {
       result += element.text
     } else if ("interpolation" in element) {
@@ -130,7 +130,7 @@ let renderTree = (tree, data, args) => {
       if ("if" in element.tag) {
         let ifTags = []
         ifTags.push(element.tag.if.if)
-        ifTags = ifTags.concat(_.map(element.tag.if.elsif))
+        ifTags = ifTags.concat(map(element.tag.if.elsif))
 
         if (element.tag.if.else) {
           ifTags.push({
@@ -140,7 +140,7 @@ let renderTree = (tree, data, args) => {
           })
         }
 
-        let tag = _.detect(ifTags, (ifTag) => {
+        let tag = detect(ifTags, (ifTag) => {
           let value = evaluateExpression(ifTag.value, ifTag.filters, data, args)
           return isTruthy(value)
         })
@@ -156,7 +156,7 @@ let renderTree = (tree, data, args) => {
           args
         )
 
-        _.each(values, (value) => {
+        each(values, (value) => {
           let newData = data
           newData[element.tag.for.for.variable] = value
           result += renderTree(element.tag.for.template, newData, args)
@@ -192,8 +192,4 @@ Template.render = function (template, data = {}, args = {}) {
   return renderTree(tree, data, args)
 }
 
-Template.a = 1
-
 export default Template
-
-module.exports = Template
