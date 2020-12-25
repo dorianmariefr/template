@@ -1,27 +1,30 @@
 {
   "name": "@simple-languages/template",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "A better liquid-like templating engine",
   "license": "MIT",
+  "main": "./dist/Template.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode development",
-    "test": "TESTBUILD=true webpack --mode development && mocha test-dist/main.js --require source-map-support/register && rm -rf test-dist"
+    "test": "TESTBUILD=true webpack --mode development && mocha test-dist/main.js --require source-map-support/register && rm -rf test-dist",
+    "prepublishOnly": "webpack --mode=production"
   },
   "dependencies": {
+    "@simple-languages/template": "^0.0.4",
+    "underscore": "^1.10.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "glob": "^7.1.6",
+    "mocha": "^7.1.1",
     "pegjs": "^0.10.0",
     "pegjs-loader": "^0.5.6",
-    "underscore": "^1.10.2",
+    "source-map-support": "^0.5.16",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^7.1.1",
-    "source-map-support": "^0.5.16"
-  },
-  "main": "webpack.config.js",
   "directories": {
     "example": "examples",
     "test": "test"

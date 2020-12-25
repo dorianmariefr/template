@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@simple-languages/template@^0.0.4":
+  "integrity" "sha512-7pLXHtac5quyi/EgoJFETbx7pgTPgZfkQQVcoGHzJUh0aEfi6k/6c8fb9rCYy+kewHn3d9OtasfGPKPJn3mRyQ=="
+  "resolved" "https://registry.npmjs.org/@simple-languages/template/-/template-0.0.4.tgz"
+  "version" "0.0.4"
+  dependencies:
+    "underscore" "^1.10.2"
+
 "@types/events@*":
   "integrity" "sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g=="
   "resolved" "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz"
@@ -1683,7 +1690,7 @@
   dependencies:
     "is-glob" "^4.0.1"
 
-"glob@^7.0.3", "glob@^7.1.3", "glob@^7.1.4":
+"glob@^7.0.3", "glob@^7.1.3", "glob@^7.1.4", "glob@^7.1.6":
   "integrity" "sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA=="
   "resolved" "https://registry.npmjs.org/glob/-/glob-7.1.6.tgz"
   "version" "7.1.6"

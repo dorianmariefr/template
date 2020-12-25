@@ -179,7 +179,7 @@ let renderTree = (tree, data, args) => {
   return result
 }
 
-Template.render = function(template, data = {}, args = {}) {
+Template.render = function (template, data = {}, args = {}) {
   args.filters = args.filters || {}
   let tree = {}
 
@@ -192,4 +192,8 @@ Template.render = function(template, data = {}, args = {}) {
   return renderTree(tree, data, args)
 }
 
+Template.a = 1
+
 export default Template
+
+module.exports = Template

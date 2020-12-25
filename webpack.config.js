@@ -1,7 +1,7 @@
 let path = require("path")
 let glob = require("glob")
 
-let entry = __dirname + "/src/index.js"
+let entry = __dirname + "/src/Template.js"
 let outputPath = __dirname + "/dist/"
 let devtool = ""
 
@@ -12,9 +12,15 @@ if (process.env.TESTBUILD) {
 }
 
 module.exports = {
+  target: "web",
   entry: entry,
   output: {
     path: outputPath,
+    filename: "Template.js",
+    library: "Template",
+    libraryTarget: "this",
+    globalObject: "this",
+    umdNamedDefine: true,
   },
   devtool: devtool,
   module: {
@@ -28,5 +34,5 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     watchContentBase: true
-  }
+  },
 }
