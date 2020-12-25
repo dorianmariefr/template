@@ -1,5 +1,5 @@
 import parser from "./template.pegjs"
-import { each, map, detect }  from "underscore"
+import { each, map, detect } from "underscore"
 
 let Template = {}
 

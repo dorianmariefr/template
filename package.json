@@ -11,10 +11,10 @@
     "prepublishOnly": "webpack --mode=production"
   },
   "dependencies": {
-    "@simple-languages/template": "^0.0.4",
     "underscore": "^1.10.2"
   },
   "devDependencies": {
+    "babel-plugin-add-module-exports": "^1.0.4",
     "chai": "^4.2.0",
     "glob": "^7.1.6",
     "mocha": "^7.1.1",
@@ -26,7 +26,6 @@
     "webpack-dev-server": "^3.10.3"
   },
   "directories": {
-    "example": "examples",
     "test": "test"
   },
   "repository": {
