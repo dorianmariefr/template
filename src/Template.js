@@ -82,9 +82,13 @@ let valueToText = function(value) {
       return valueToText(element)
     }).join(", ") + "]"
   } else if (typeof value === "object") {
-    return "{ " +_.map(value, (element, key) => {
-      return key + ": " + valueToText(element)
-    }).join(", ") + " }"
+    if (Object.keys(value).length === 0) {
+      return "{}"
+    } else {
+      return "{ " +_.map(value, (element, key) => {
+        return key + ": " + valueToText(element)
+      }).join(", ") + " }"
+    }
   } else {
     throw "unrecognized value to convert to text"
   }
@@ -123,7 +127,7 @@ let renderTree = (tree, data, args) => {
       value = evaluateExpression(value, filters, data, args)
       result += valueToText(value)
     } else if ("tag" in element) {
-      if ("if" in element.tag) { 
+      if ("if" in element.tag) {
         let ifTags = []
         ifTags.push(element.tag.if.if)
         ifTags = ifTags.concat(_.map(element.tag.if.elsif))

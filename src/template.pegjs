@@ -182,13 +182,17 @@ array =
     other_values:(ws "," ws value:value ws { return value })*
     { return [first_value, ...other_values] }
   )?
+  ws ","?
   ws "]"
   { return values }
 
 short_array =
   first_value:value
   other_values:(ws "," ws value:value ws { return value })+
-  { return { array: [first_value, ...other_values] } }
+  ws ","?
+  { return { array: [first_value, ...other_values] } } /
+  first_value:value ws ","
+  { return { array: [first_value] } }
 
 hash =
   "{" ws
@@ -200,6 +204,7 @@ hash =
     )*
     { return [first_key_value, ...other_key_values] }
   )?
+  ws ","?
   ws "}"
   { return key_values }
 
@@ -209,4 +214,5 @@ short_hash =
     ws "," ws key_value:key_value
     { return key_value }
   )*
+  ws ","?
   { return { hash: [first_key_value, ...other_key_values] } }
