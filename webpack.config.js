@@ -3,11 +3,11 @@ let glob = require("glob")
 
 if (process.env.TESTBUILD) {
   module.exports = {
-    entry: glob.sync(__dirname + "/test/**/*.test.js")
+    entry: glob.sync(__dirname + "/test/**/*.test.js"),
     output: {
-      path: __dirname + "/test-dist/"
+      path: __dirname + "/test-dist/",
     },
-    devtool: "source-map"
+    devtool: "source-map",
     module: {
       rules: [
         {
@@ -23,9 +23,9 @@ if (process.env.TESTBUILD) {
   }
 } else {
   module.exports = {
-    entry: __dirname + "/src/Template.js"
+    entry: __dirname + "/src/Template.js",
     output: {
-      path: __dirname + "/dist/"
+      path: __dirname + "/dist/",
       filename: "Template.js",
       library: "Template",
       libraryTarget: 'umd',
