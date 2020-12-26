@@ -27,7 +27,7 @@ Template.render("{{ [1, 2, 3] }}") // => [1, 2, 3]
 ## Parsing
 
 ```js
-Template.parse("hello {{ "dorian" | capitalize }}")
+Template.parse('hello {{ "dorian" | capitalize }}')
 ```
 
 # Examples
