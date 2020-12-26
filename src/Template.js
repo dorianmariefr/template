@@ -39,7 +39,7 @@ let fetchVariableInData = function(variable, data) {
 }
 
 let valueToJs = function(value, data) {
-  if ("nil" in value) {
+  if (value === null || "nil" in value) {
     return null
   } else if ("float" in value) {
     return parseFloat(value.float, 10)
@@ -168,6 +168,22 @@ let renderTree = (tree, data, args) => {
           data,
           args
         )
+      } else if ("other" in element.tag) {
+        if (!(element.tag.other.name in args.tags)) {
+          throw "unknown tag " + element.tag.other.name
+        }
+
+        let values = evaluateExpression(
+          element.tag.other.value,
+          element.tag.other.filters,
+          data,
+          args
+        )
+
+        result += args.tags[element.tag.other.name](
+          renderTree(element.tag.other.template, data, args),
+          values
+        )
       } else {
         throw "unrecognized tag element"
       }
@@ -181,6 +197,7 @@ let renderTree = (tree, data, args) => {
 
 Template.render = function (template, data = {}, args = {}) {
   args.filters = args.filters || {}
+  args.tags = args.tags || {}
   let tree = {}
 
   try {

@@ -19,7 +19,17 @@ let data = {
 }
 
 let filters = {
-  not: (value) => { return !value }
+  not: (value) => !value
+}
+
+let tags = {
+  div: (template, args) => {
+    if (args && args.class) {
+      return `<div class="${args.class}">${template}</div>`
+    } else {
+      return `<div>${template}</div>`
+    }
+  }
 }
 
 describe("Template", function() {
@@ -167,7 +177,7 @@ describe("Template", function() {
       "[hello \" world ', ' \"]"
     )
   })
-  
+
   it("works with short array syntax and trailing comma", function() {
     expect(Template.render(
       "{{ 1, }}"
@@ -245,6 +255,22 @@ describe("Template", function() {
       "{{ {a:1,b:2,} }}"
     )).to.equal(
       "{ a: 1, b: 2 }"
+    )
+  })
+
+  it("works with custom tags", function() {
+    expect(Template.render(
+      "{% div %}hello{% end %}", {}, { tags: tags }
+    )).to.equal(
+      "<div>hello</div>"
+    )
+  })
+
+  it("works with custom tags with parameter", function() {
+    expect(Template.render(
+      "{% div { class: 'button' } %}hello{% end %}", {}, { tags: tags }
+    )).to.equal(
+      "<div class=\"button\">hello</div>"
     )
   })
 })
